@@ -1,0 +1,33 @@
+table {
+    border: solid thin black;
+    border-collapse: collapse;
+}
+
+table td {
+    border: solid thin black;
+    height: 40px;
+    width: 40px;
+}
+
+tr:nth-child(odd) td:nth-child(even),
+tr:nth-child(even) td:nth-child(odd) {
+    background-color: black;
+}
+
+.black {
+    color: chocolate;
+}
+
+.white {
+    color: gray;
+}
+
+.figure {
+    font-size: 32px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.can_move {
+    background-color: yellow;
+}
