@@ -32,7 +32,14 @@ $(function () {
             }
             table.append(row);
         }
-        $("body").html(table);
+        $("#board").html(table);
+
+        const hist = chess.history({ verbose: true });
+        $("#captured").html(
+            hist
+                .filter(r => r.captured)
+                .map(r => $("<li>").text(types[r.piece]).addClass(r.color == "w" ? "black" : "white"))
+        );
 
         $(".figure").draggable({
             cancel: '.cant_move',
