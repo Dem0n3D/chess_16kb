@@ -1,0 +1,23 @@
+{
+  "name": "html",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dem0n3D/chess_16kb.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Dem0n3D/chess_16kb/issues"
+  },
+  "homepage": "https://github.com/Dem0n3D/chess_16kb#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
