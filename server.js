@@ -6,7 +6,7 @@ app.get('/', function (req, res) {
     res.send('hello world')
 });
 
-app.use(express.static('.'));
+app.use(express.static('static'));
 
 app.listen(8080, function () {
     console.log('Example app listening on port 3000!');
