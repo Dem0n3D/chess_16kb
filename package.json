@@ -18,6 +18,10 @@
   },
   "homepage": "https://github.com/Dem0n3D/chess_16kb#readme",
   "dependencies": {
-    "express": "^4.16.3"
+    "body-parser": "^1.18.2",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.16.3",
+    "express-validator": "^5.1.2",
+    "nunjucks": "^3.1.2"
   }
 }
