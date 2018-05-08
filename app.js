@@ -9,6 +9,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(expressValidator());
+app.use(express.static('static'));
 
 nunjucks.configure('views', {
     autoescape: true,
