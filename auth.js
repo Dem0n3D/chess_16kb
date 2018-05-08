@@ -1,4 +1,5 @@
 const express = require('express');
+const bcrypt = require('bcryptjs');
 
 const app = require('./app');
 
@@ -16,12 +17,15 @@ module.exports = function (db) {
         if (errors) {
             res.render('register.html', {title: 'Register', errors: errors, fields: {login: req.body.login}});
         } else {
-            const user = {
-                login: req.body.login,
-            };
+            bcrypt.hash(req.body.password, 10, (err, hash) => {
+                const user = {
+                    login: req.body.login,
+                    password: hash,
+                };
 
-            db.collection("users").insert(user, (err, result) => {
-                res.render('register.html', {title: 'Register'});
+                db.collection("users").insert(user, (err, result) => {
+                    res.render('register.html', {title: 'Register'});
+                });
             });
         }
     });
