@@ -8,7 +8,7 @@ module.exports = function (db) {
         res.render('register.html', {title: 'Register'});
     });
 
-    app.post('/auth/register', function (req, res) {
+    app.post('/auth/register', async function (req, res) {
         req.checkBody('login', 'Invalid name').isAlphanumeric().notEmpty();
         req.checkBody('password', 'Empty password').notEmpty();
         req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
@@ -17,14 +17,17 @@ module.exports = function (db) {
         if (errors) {
             res.render('register.html', {title: 'Register', errors: errors, fields: {login: req.body.login}});
         } else {
-            bcrypt.hash(req.body.password, 10)
-                .then(hash => ({
+            try {
+                const hash = await bcrypt.hash(req.body.password, 10);
+                const user = {
                     login: req.body.login,
                     password: hash,
-                }))
-                .then(user => db.collection("users").insert(user))
-                .then(() => res.render('register.html', {title: 'Register'}))
-                .catch(err => console.error(err));
+                };
+                await db.collection("users").insert(user);
+                await res.render('register.html', {title: 'Register'});
+            } catch (err) {
+                console.error(err)
+            }
         }
     });
 };
