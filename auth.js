@@ -17,16 +17,14 @@ module.exports = function (db) {
         if (errors) {
             res.render('register.html', {title: 'Register', errors: errors, fields: {login: req.body.login}});
         } else {
-            bcrypt.hash(req.body.password, 10, (err, hash) => {
-                const user = {
+            bcrypt.hash(req.body.password, 10)
+                .then(hash => ({
                     login: req.body.login,
                     password: hash,
-                };
-
-                db.collection("users").insert(user, (err, result) => {
-                    res.render('register.html', {title: 'Register'});
-                });
-            });
+                }))
+                .then(user => db.collection("users").insert(user))
+                .then(() => res.render('register.html', {title: 'Register'}))
+                .catch(err => console.error(err));
         }
     });
 };
