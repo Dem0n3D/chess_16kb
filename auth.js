@@ -30,4 +30,20 @@ module.exports = function (db) {
             }
         }
     });
+
+    app.get('/auth/login', function (req, res) {
+        res.render('login.html', {title: 'Login'});
+    });
+
+    app.post('/auth/login', async function (req, res) {
+        try {
+            const user = await db.collection("users").findOne({login: req.body.login});
+
+            if (await bcrypt.compare(req.body.password, user.password)) {
+                console.log("Success")
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    });
 };
