@@ -38,12 +38,27 @@ module.exports = function (db) {
     app.post('/auth/login', async function (req, res) {
         try {
             const user = await db.collection("users").findOne({login: req.body.login});
+            const challenge = await db.collection("challenges").findOne({login: req.body.login, challenge: req.body.challenge});
 
-            if (await bcrypt.compare(req.body.password, user.password)) {
-                console.log("Success")
+            if (await bcrypt.hash(user.password, challenge.challenge) == req.body.response) {
+                res.send("Success")
+            } else {
+                res.send("Error")
             }
         } catch (err) {
-            console.log(err)
+            res.send("Error")
+        }
+    });
+
+    app.get('/auth/salt', async function (req, res) {
+        try {
+            const user = await db.collection("users").findOne({login: req.query.login});
+            const salt = await bcrypt.getSalt(user.password);
+            const challenge = await bcrypt.genSaltSync();
+            await db.collection("challenges").insert({login: user.login, challenge});
+            res.send(JSON.stringify({salt: salt, challenge: challenge}));
+        } catch (e) {
+            res.status(500).send("Internal error");
         }
     });
 };
