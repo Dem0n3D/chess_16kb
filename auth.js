@@ -32,7 +32,11 @@ module.exports = function (db) {
     });
 
     app.get('/auth/login', function (req, res) {
-        res.render('login.html', {title: 'Login'});
+        if (req.session.user_id) {
+            res.redirect("/");
+        } else {
+            res.render('login.html', {title: 'Login'});
+        }
     });
 
     app.post('/auth/login', async function (req, res) {
@@ -41,12 +45,13 @@ module.exports = function (db) {
             const challenge = await db.collection("challenges").findOne({login: req.body.login, challenge: req.body.challenge});
 
             if (await bcrypt.hash(user.password, challenge.challenge) == req.body.response) {
-                res.send("Success")
+                req.session.user_id = user._id;
+                res.send("Success");
             } else {
-                res.send("Error")
+                res.send("Error");
             }
         } catch (err) {
-            res.send("Error")
+            res.send("Error");
         }
     });
 
