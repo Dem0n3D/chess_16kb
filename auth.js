@@ -1,3 +1,5 @@
+const {User} = require("./models");
+
 const express = require('express');
 const bcrypt = require('bcryptjs');
 
@@ -19,11 +21,11 @@ module.exports = function (db) {
         } else {
             try {
                 const hash = await bcrypt.hash(req.body.password, 10);
-                const user = {
+                const user = new User({
                     login: req.body.login,
                     password: hash,
-                };
-                await db.collection("users").insert(user);
+                });
+                await user.save();
                 await res.render('register.html', {title: 'Register'});
             } catch (err) {
                 console.error(err)
@@ -41,10 +43,10 @@ module.exports = function (db) {
 
     app.post('/auth/login', async function (req, res) {
         try {
-            const user = await db.collection("users").findOne({login: req.body.login});
-            const challenge = await db.collection("challenges").findOne({login: req.body.login, challenge: req.body.challenge});
+            const user = await User.findOne({login: req.body.login});
 
-            if (await bcrypt.hash(user.password, challenge.challenge) == req.body.response) {
+            if (user.challenges.filter(c => c == req.body.challenge).length == 1 &&
+                await bcrypt.hash(user.password, req.body.challenge) == req.body.response) {
                 req.session.user_id = user._id;
                 res.send("Success");
             } else {
@@ -57,12 +59,14 @@ module.exports = function (db) {
 
     app.get('/auth/salt', async function (req, res) {
         try {
-            const user = await db.collection("users").findOne({login: req.query.login});
+            const user = await User.findOne({login: req.query.login});
             const salt = await bcrypt.getSalt(user.password);
             const challenge = await bcrypt.genSaltSync();
-            await db.collection("challenges").insert({login: user.login, challenge});
+            user.challenges.push(challenge);
+            await user.save();
             res.send(JSON.stringify({salt: salt, challenge: challenge}));
         } catch (e) {
+            console.log(e);
             res.status(500).send("Internal error");
         }
     });
