@@ -8,3 +8,5 @@ const app = require('./app');
 app.get('/', function (req, res) {
     res.send('hello world')
 });
+
+app.use('/chess', router);
