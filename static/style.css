@@ -1,0 +1,8 @@
+#gamelist {
+    border-collapse: collapse;
+}
+
+#gamelist td {
+    border: black solid thin;
+    padding: 5px;
+}

@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <link rel="stylesheet" href="/static/style.css" />
+{% endblock %}
+
+{% block content %}
+    {% if user %}
+    <form action="/chess/game" method="post">
+        <button type="submit">
+            New game
+        </button>
+    </form>
+    {% else %}
+    <a href="/auth/login">Sign In</a> /
+    <a href="/auth/register">Sign Up</a>
+    {% endif %}
+
+    <table id="gamelist">
+    <thead>
+        <tr>
+            <th>Player 1</th>
+            <th>Player 2</th>
+            <th>Started</th>
+            <th>Moves</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for game in games %}
+        <tr>
+            <td>{{ game.player1.login }}</td>
+            <td>{{ game.player2.login }}</td>
+            <td>{{ game.start.toLocaleDateString() }} {{ game.start.toLocaleTimeString() }}</td>
+            <td>{{ game.moves.length }}</td>
+            <td>
+                {% if game.player2 %}
+                <button>
+                    Watch
+                </button>
+                {% else %}
+                <button>
+                    Join
+                </button>
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+
+    <script src="/static/jquery-3.2.1.min.js"></script>
+{% endblock %}

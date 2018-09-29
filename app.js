@@ -11,7 +11,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(expressValidator());
-app.use(express.static('static'));
+app.use('/static', express.static('static'));
 app.use(session({
     secret: 'keyboard cat',
     store: new MongoStore({ mongooseConnection: mongoose.connection })
