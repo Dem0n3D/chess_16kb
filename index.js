@@ -11,7 +11,8 @@ app.get('/', async function (req, res) {
     const games = await Game.find({})
         .populate("player1")
         .populate("player2");
-    res.render('index.html', {games, user: await User.findOne({_id: req.session.user_id})});
+    const user = await User.findOne({_id: req.session.user_id});
+    res.render('index.html', {games, user});
 });
 
 app.use('/chess', router);

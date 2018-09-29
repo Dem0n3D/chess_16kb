@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <link rel="stylesheet" href="/static/jquery-ui.css" />
+    <link rel="stylesheet" href="/static/board.css" />
+{% endblock %}
+
+{% block content %}
+    <div id="board"></div>
+    <ul id="captured"></ul>
+
+    <script>
+        data = {
+            id: "{{ game._id }}",
+            fen: "{{ game.fen }}",
+        };
+    </script>
+
+    <script src="/static/jquery-3.2.1.min.js"></script>
+    <script src="/static/jquery-ui.js"></script>
+    <script src="/static/chess.min.js"></script>
+    <script src="/static/axios.min.js"></script>
+    <script src="/static/board.js"></script>
+{% endblock %}

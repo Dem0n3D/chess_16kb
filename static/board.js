@@ -1,5 +1,5 @@
 $(function () {
-    var chess = new Chess();
+    var chess = new Chess(data.fen);
 
     var types = {
         r: '♜',
@@ -53,8 +53,17 @@ $(function () {
             accept: ".figure",
             drop: function (event, ui) {
                 if (possible_moves.includes($(ui.draggable[0]).data("id") + $(this).data("id"))) {
-                    chess.move({from: $(ui.draggable[0]).data("id"), to: $(this).data("id")})
-                    render();
+                    chess.move({from: $(ui.draggable[0]).data("id"), to: $(this).data("id")});
+                    const params = {
+                        from: $(ui.draggable[0]).data("id"),
+                        to: $(this).data("id"),
+                        fen: chess.fen(),
+                    };
+                    axios.post(`/chess/game/${data.id}/moves`, params)
+                        .then(res => {
+
+                            render();
+                        });
                 }
             }
         });

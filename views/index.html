@@ -35,9 +35,11 @@
             <td>{{ game.moves.length }}</td>
             <td>
                 {% if game.player1._id.equals(user._id) or (game.player2 and game.player2._id.equals(user._id)) %}
-                <button>
-                    Continue
-                </button>
+                <a href="/chess/game/{{ game._id }}">
+                    <button>
+                        Continue
+                    </button>
+                </a>
                 {% elif game.player2 or not user %}
                 <button>
                     Watch
