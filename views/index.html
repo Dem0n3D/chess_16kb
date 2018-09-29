@@ -34,14 +34,20 @@
             <td>{{ game.start.toLocaleDateString() }} {{ game.start.toLocaleTimeString() }}</td>
             <td>{{ game.moves.length }}</td>
             <td>
-                {% if game.player2 %}
+                {% if game.player1._id.equals(user._id) or (game.player2 and game.player2._id.equals(user._id)) %}
+                <button>
+                    Continue
+                </button>
+                {% elif game.player2 or not user %}
                 <button>
                     Watch
                 </button>
                 {% else %}
-                <button>
-                    Join
-                </button>
+                <form action="/chess/game/join/{{ game._id }}" method="post">
+                    <button>
+                        Join
+                    </button>
+                </form>
                 {% endif %}
             </td>
         </tr>
