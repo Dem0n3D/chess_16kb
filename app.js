@@ -8,6 +8,8 @@ const mongoose = require('mongoose');
 
 const app = express();
 
+var expressWs = require('express-ws')(app);
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(expressValidator());

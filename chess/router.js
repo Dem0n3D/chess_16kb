@@ -2,6 +2,7 @@ const express = require('express');
 
 const {Game} = require("./models");
 const {User} = require("../models");
+const {games} = require("./websocket");
 
 
 const router = new express.Router();
@@ -24,6 +25,7 @@ router.post('/game/:id/moves', async function (req, res) {
     game.fen = req.body.fen;
     game.moves.push(req.body.from + req.body.to);
     await game.save();
+    Object.values(games[game._id]).forEach(client => client.send(game.fen));
     res.render("board.html", {game, user});
 });
 

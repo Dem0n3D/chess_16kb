@@ -1,6 +1,7 @@
 const express = require('express');
 
 const router = require("./chess/router");
+const {ws_router} = require("./chess/websocket");
 const {Game} = require("./chess/models");
 const {User} = require("./models");
 
@@ -16,3 +17,4 @@ app.get('/', async function (req, res) {
 });
 
 app.use('/chess', router);
+app.use('/ws', ws_router);

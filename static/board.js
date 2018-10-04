@@ -1,3 +1,12 @@
+function guid() {
+  function s4() {
+    return Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1);
+  }
+  return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+}
+
 $(function () {
     var chess = new Chess(data.fen);
 
@@ -10,7 +19,7 @@ $(function () {
         p: '♟'
     };
 
-    const ws = new WebSocket("ws://localhost:8080/");
+    const ws = new WebSocket(`ws://localhost:8080/ws?sid=${guid()}&game_id=${data.id}`);
 
     ws.onmessage = message => console.log(message.data);
 

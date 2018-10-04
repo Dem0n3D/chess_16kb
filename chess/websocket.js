@@ -1,18 +1,18 @@
-const {wss} = require('../websocket');
+const express = require('express');
 
+const ws_router = express.Router();
 
-wss.on('connection', (client) => {
+const games = {};
 
-    console.log("client connected")
+ws_router.ws('/', function (client, req) {
+    games[req.query.game_id] = games[req.query.game_id] || {};
+    games[req.query.game_id][req.query.sid] = client;
 
-    //connection is up, let's add a simple simple event
-    client.on('message', (message) => {
-
-        //log the received message and send it back to the client
-        console.log('received: %s', message);
-        client.send(`Hello, you sent -> ${message}`);
+    client.on('message', function (msg) {
+        client.send(msg);
     });
-
-    //send immediatly a feedback to the incoming connection
-    client.send('Hi there, I am a WebSocket server');
+    client.send("hi");
 });
+
+
+module.exports = {ws_router, games};
