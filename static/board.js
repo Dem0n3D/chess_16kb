@@ -10,6 +10,10 @@ $(function () {
         p: '♟'
     };
 
+    const ws = new WebSocket("ws://localhost:8080/");
+
+    ws.onmessage = message => console.log(message.data);
+
     const render = function() {
         const figures = chess.board();
         const turn_color = chess.fen().split(" ")[1];

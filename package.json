@@ -29,7 +29,8 @@
     "express-validator": "^5.1.2",
     "mongodb": "^3.0.7",
     "mongoose": "^5.2.14",
-    "nunjucks": "^3.1.2"
+    "nunjucks": "^3.1.2",
+    "ws": "^6.0.0"
   },
   "devDependencies": {
     "nodemon": "^1.17.4"
