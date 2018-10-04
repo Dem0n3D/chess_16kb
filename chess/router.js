@@ -14,7 +14,8 @@ router.get('/my_games', async function (req, res) {
 router.get('/game/:id', async function (req, res) {
     const game = await Game.findOne({_id: req.params.id});
     const user = await User.findOne({_id: req.session.user_id});
-    res.render("board.html", {game, user});
+    const my_color = game.player1.equals(user._id) ? "w" : "b";
+    res.render("board.html", {game, user, my_color});
 });
 
 router.post('/game/:id/moves', async function (req, res) {

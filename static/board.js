@@ -12,8 +12,9 @@ $(function () {
 
     const render = function() {
         const figures = chess.board();
-        const who_can_move = chess.moves({verbose: true}).map(m => m.from);
-        const possible_moves = chess.moves({verbose: true}).map(m => m.from + m.to);
+        const turn_color = chess.fen().split(" ")[1];
+        const who_can_move = data.my_color == turn_color ? chess.moves({verbose: true}).map(m => m.from) : [];
+        const possible_moves = data.my_color == turn_color ? chess.moves({verbose: true}).map(m => m.from + m.to) : [];
 
         var table = $("<table>");
         for (var i = 0; i < 8; i++) {
