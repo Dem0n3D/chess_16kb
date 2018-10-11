@@ -25,7 +25,7 @@ router.post('/game/:id/moves', async function (req, res) {
     game.fen = req.body.fen;
     game.moves.push(req.body.from + req.body.to);
     await game.save();
-    Object.values(games[game._id]).forEach(client => client.send(game.fen));
+    Object.values(games[game._id]).filter(client => client.readyState == 1).forEach(client => client.send(game.fen));
     res.render("board.html", {game, user});
 });
 

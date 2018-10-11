@@ -21,7 +21,7 @@ $(function () {
 
     const ws = new WebSocket(`ws://localhost:8080/ws?sid=${guid()}&game_id=${data.id}`);
 
-    ws.onmessage = message => console.log(message.data);
+    ws.onmessage = message => chess.load(message.data) && render();
 
     const render = function() {
         const figures = chess.board();
