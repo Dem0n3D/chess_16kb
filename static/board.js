@@ -1,11 +1,13 @@
-function guid() {
-  function s4() {
-    return Math.floor((1 + Math.random()) * 0x10000)
-      .toString(16)
-      .substring(1);
-  }
-  return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
-}
+import '../node_modules/jquery-ui/themes/base/all.css';
+import './style.css';
+import './board.css';
+
+import $ from 'jquery';
+import 'jquery-ui-bundle';
+import guid from 'uuid/v4';
+import Chess from 'chess.js';
+import axios from 'axios';
+
 
 $(function () {
     var chess = new Chess(data.fen);
