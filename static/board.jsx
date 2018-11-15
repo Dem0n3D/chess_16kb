@@ -11,26 +11,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import range from 'lodash/range';
 
+import {GameContext} from "./contexts";
 
-class Board extends React.Component {
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            fen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
-        }
-    }
-
-    componentWillMount() {
-        axios.get(`/chess/game/${data.id}/json`)
-            .then(res => {
-                this.setState({fen: res.data.game.fen})
-            });
-    }
+export class Board extends React.Component {
 
     render() {
-        var chess = new Chess(this.state.fen);
+        var chess = new Chess(this.props.fen);
         const figures = chess.board();
 
         var types = {
@@ -41,8 +28,6 @@ class Board extends React.Component {
             k: '♚',
             p: '♟'
         };
-
-        console.log(figures)
 
         return (
             <table>
@@ -78,6 +63,9 @@ class Board extends React.Component {
 
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-    ReactDOM.render(<Board/>, document.getElementById("board"));
-});
+
+export const BoardContainer = (props) => (
+    <GameContext.Consumer>
+        {val => <Board fen={val.fen} />}
+    </GameContext.Consumer>
+);
