@@ -4,6 +4,7 @@ import axios from "axios";
 
 import {Board, BoardContainer} from "./board";
 import {GameContext} from "./contexts";
+import {CapturedContainer} from "./captured";
 
 
 class App extends React.Component {
@@ -28,6 +29,8 @@ class App extends React.Component {
             <div>
                 <GameContext.Provider value={this.state}>
                     <BoardContainer />
+                    <CapturedContainer color={'w'}/>
+                    <CapturedContainer color={'b'}/>
                 </GameContext.Provider>
             </div>
         );
