@@ -10,7 +10,10 @@ module.exports = {
 
     entry: {
         board: [
-            './static/board.js'
+            './static/board.jsx'
+        ],
+        auth: [
+            './static/auth.js'
         ],
     },
 

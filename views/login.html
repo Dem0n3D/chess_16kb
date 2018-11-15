@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 
+{% block head %}
+{% endblock %}
+
 {% block content %}
     <form method="post">
         <label>login</label>
@@ -17,8 +20,5 @@
         {% endfor %}
     </ul>
 
-    <script src="/static/jquery-3.2.1.min.js"></script>
-    <script src="/static/axios.min.js"></script>
-    <script src="/static/bcrypt.min.js"></script>
-    <script src="/static/auth.js"></script>
+    <script src="/static/bundle/auth.wp.js"></script>
 {% endblock %}

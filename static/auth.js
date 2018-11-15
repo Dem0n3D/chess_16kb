@@ -1,3 +1,9 @@
+import $ from 'jquery';
+import 'jquery-ui-bundle';
+import axios from 'axios';
+import bcrypt from 'bcryptjs';
+
+
 $(function () {
 
     $("#btn_login").click(e => {
@@ -5,8 +11,8 @@ $(function () {
         const password = $("input[name='password']").val();
         axios.get("/auth/salt", {params: {login: login}})
             .then(r => {
-                const hash = dcodeIO.bcrypt.hashSync(password, r.data.salt);
-                const response = dcodeIO.bcrypt.hashSync(hash, r.data.challenge);
+                const hash = bcrypt.hashSync(password, r.data.salt);
+                const response = bcrypt.hashSync(hash, r.data.challenge);
 
                 axios.post("/auth/login", {login, password, response, challenge: r.data.challenge})
             });

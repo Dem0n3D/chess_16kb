@@ -19,6 +19,13 @@ router.get('/game/:id', async function (req, res) {
     res.render("board.html", {game, user, my_color});
 });
 
+router.get('/game/:id/json', async function (req, res) {
+    const game = await Game.findOne({_id: req.params.id});
+    const user = await User.findOne({_id: req.session.user_id});
+    const my_color = game.player1.equals(user._id) ? "w" : "b";
+    res.json({game, user, my_color});
+});
+
 router.post('/game/:id/moves', async function (req, res) {
     const game = await Game.findOne({_id: req.params.id});
     const user = await User.findOne({_id: req.session.user_id});

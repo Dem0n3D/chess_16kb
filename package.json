@@ -19,6 +19,12 @@
     "url": "https://github.com/Dem0n3D/chess_16kb/issues"
   },
   "homepage": "https://github.com/Dem0n3D/chess_16kb#readme",
+  "babel": {
+    "presets": [
+      "@babel/env",
+      "@babel/react"
+    ]
+  },
   "dependencies": {
     "axios": "^0.18.0",
     "bcryptjs": "^2.4.3",
@@ -33,9 +39,12 @@
     "jquery": "^3.3.1",
     "jquery-ui": "^1.12.1",
     "jquery-ui-bundle": "^1.12.1-migrate",
+    "lodash": "^4.17.11",
     "mongodb": "^3.0.7",
     "mongoose": "^5.2.14",
     "nunjucks": "^3.1.2",
+    "react": "^16.6.1",
+    "react-dom": "^16.6.1",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
