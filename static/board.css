@@ -31,3 +31,13 @@ tr:nth-child(even) td.cell:nth-child(odd) {
 .can_move {
     background-color: yellow;
 }
+
+.can_drop,
+tr:nth-child(odd) td.cell.can_drop:nth-child(even),
+tr:nth-child(even) td.cell.can_drop:nth-child(odd) {
+    background-color: lightgreen;
+}
+
+.dragging {
+    background-color: orangered;
+}

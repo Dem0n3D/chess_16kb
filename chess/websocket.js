@@ -11,7 +11,7 @@ ws_router.ws('/', function (client, req) {
     client.on('message', function (msg) {
         client.send(msg);
     });
-    client.send("hi");
+    // client.send("hi");
 });
 
 
